@@ -1,0 +1,22 @@
+{
+  "num_images": 8,
+  "images": [
+    "d415_000000000",
+    "d415_000000001",
+    "d415_000000002",
+    "d415_000000003",
+    "d415_000000004",
+    "d415_000000005",
+    "d415_000000006",
+    "d415_000000007"
+  ],
+  "source_images": "data\\real-test\\rgb",
+  "source_masks": {
+    "gt": "data\\real-test\\masks",
+    "cnn": "exports\\demo_masks\\cnn",
+    "snn": "exports\\demo_masks\\snn",
+    "dta": "exports\\demo_masks\\dta"
+  },
+  "source_attention": "exports\\demo_attention",
+  "fallback_generation": true
+}

@@ -1,0 +1,58 @@
+# SNN-DTA: Complete Requirements
+# Python 3.10+ required
+
+# ── Core Deep Learning ──────────────────────────────────────────────
+torch
+torchvision
+torchaudio
+
+# ── Spiking Neural Networks ─────────────────────────────────────────
+spikingjelly
+
+# ── Computer Vision ─────────────────────────────────────────────────
+opencv-python
+Pillow
+scikit-image
+albumentations
+
+# ── Robotics Simulation ─────────────────────────────────────────────
+# pybullet
+
+# ── Data Science & Numerics ─────────────────────────────────────────
+numpy
+scipy
+pandas
+h5py
+
+# ── Training & Logging ──────────────────────────────────────────────
+tensorboard
+tqdm
+wand
+einops
+
+# ── Configuration ────────────────────────────────────────────────────
+PyYAML
+omegaconf
+hydra-core
+
+# ── Visualization ────────────────────────────────────────────────────
+matplotlib
+seaborn
+
+# ── Utilities ────────────────────────────────────────────────────────
+colorlog
+rich
+click
+pathlib2
+
+# ── Testing ──────────────────────────────────────────────────────────
+pytest
+pytest-cov
+
+# ── Event Camera (installed separately from source) ──────────────────
+# v2e: git clone https://github.com/SensorsINI/v2e.git && pip install -e .
+# dv-processing: optional, for .aedat4 files
+
+#Deployment
+streamlit
+plotly

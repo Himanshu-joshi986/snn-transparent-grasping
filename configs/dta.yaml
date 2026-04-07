@@ -1,0 +1,46 @@
+# configs/dta.yaml — DTA-SNN specific configuration
+defaults:
+  - base
+
+model:
+  name: "dta_snn"
+  in_channels: 2                  # pos + neg event channels
+  out_channels: 1                 # binary segmentation
+  time_steps: 10
+  base_channels: 64
+  encoder_channels: [64, 128, 256, 512]
+  decoder_channels: [256, 128, 64, 32]
+
+  # LIF neuron parameters
+  lif:
+    tau: 2.0                      # membrane time constant
+    v_threshold: 1.0
+    v_reset: 0.0
+    surrogate: "atan"             # surrogate gradient function
+    detach_reset: true
+
+  # Dual Temporal-Channel Attention
+  attention:
+    temporal_heads: 4             # number of temporal attention heads
+    channel_reduction: 16        # channel squeeze ratio
+    dropout: 0.1
+    activation: "sigmoid"
+    position: "bridge"            # where to insert: "bridge" | "all_levels"
+
+  # Temporal Correlation Encoding
+  encoding:
+    method: "temporal_correlation"
+    window_size: 3
+    threshold_ratio: 0.1
+    normalize_polarity: true
+
+training:
+  epochs: 50
+  batch_size: 8
+  lr: 5.0e-5
+
+pretrained:
+  use: false
+  backbone: "spikingyolox"        # SpikingYOLOX pretrained backbone
+  checkpoint: null
+  freeze_backbone_epochs: 5       # Freeze backbone for first N epochs

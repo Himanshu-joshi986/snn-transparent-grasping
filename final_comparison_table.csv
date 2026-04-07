@@ -1,0 +1,4 @@
+Model,Synthetic IoU,Real-Test IoU,Parameters,Energy (mJ)
+CNN U-Net,0.18,0.14,31.0M,142.3
+Spiking U-Net,0.13,0.10,31.0M,18.7
+DTA-SNN (ours),0.21,0.17,31.4M,19.2

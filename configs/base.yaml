@@ -1,0 +1,67 @@
+# configs/base.yaml — Shared configuration for all models
+# Override per-model in cnn.yaml / snn.yaml / dta.yaml
+
+project:
+  name: "SNN-DTA Transparent Object Grasping"
+  version: "1.0.0"
+  seed: 42
+
+data:
+  root: "data/"
+  synthetic_rgb: "data/synthetic-val/rgb"
+  synthetic_masks: "data/synthetic-val/masks"
+  synthetic_events: "data/synthetic-val/events"
+  real_rgb: "data/real-test/rgb"
+  real_masks: "data/real-test/masks"
+  real_events: "data/real-test/events"
+  image_size: [256, 256]          # H x W
+  time_steps: 10                  # T — number of event time bins
+  train_split: 0.85
+  val_split: 0.10
+  test_split: 0.05
+  num_workers: 4
+  pin_memory: true
+
+event:
+  mode: "voxel_grid"              # "voxel_grid" | "surface_of_active_events"
+  polarity: true                  # Use polarity (pos/neg events separately)
+  temporal_bins: 10
+  normalize: true
+
+training:
+  epochs: 50
+  batch_size: 8
+  gradient_clip: 1.0
+  amp: true                       # Automatic Mixed Precision
+  log_interval: 10                # Log every N batches
+  val_interval: 1                 # Validate every N epochs
+  save_best: true
+  checkpoint_dir: "checkpoints/"
+  log_dir: "outputs/logs/"
+
+optimizer:
+  type: "AdamW"
+  lr: 5.0e-5
+  weight_decay: 1.0e-4
+  betas: [0.9, 0.999]
+
+scheduler:
+  type: "cosine_warmup"
+  warmup_epochs: 5
+  T_max: 50
+  eta_min: 1.0e-7
+
+loss:
+  type: "dice"                    # "dice" | "bce" | "focal" | "combined"
+  dice_weight: 0.8
+  bce_weight: 0.2
+  focal_gamma: 2.0
+
+metrics:
+  primary: "iou"                  # Used for model selection
+  log_all: true
+
+output:
+  save_visualizations: true
+  visualization_dir: "outputs/visualizations/"
+  paper_figures_dir: "outputs/paper_figures/"

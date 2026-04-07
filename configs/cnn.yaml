@@ -1,0 +1,18 @@
+# configs/cnn.yaml — CNN U-Net baseline configuration
+defaults:
+  - base
+
+model:
+  name: "cnn_unet"
+  in_channels: 2
+  out_channels: 1
+  base_channels: 64
+  encoder_channels: [64, 128, 256, 512]
+  decoder_channels: [256, 128, 64, 32]
+  dropout: 0.2
+  batch_norm: true
+
+training:
+  epochs: 30
+  batch_size: 16
+  lr: 1.0e-4
