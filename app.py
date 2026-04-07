@@ -218,18 +218,18 @@ def simulate_grasp(image: Image.Image, centroid_x: float, centroid_y: float) -> 
 def render_overview() -> None:
     """Project overview section with badges and optional architecture image."""
     st.markdown(
-        """
-        <div style="padding: 0.9rem 1rem; border-radius: 16px; background: linear-gradient(120deg, #d9efe6, #dceaf7); border: 1px solid #bfd6cc;">
-            
-            <h2 style="margin: 0.8rem 0 0.2rem 0; color: #0f172a;">Spiking Neural Network with Dual Temporal-Channel Attention</h2>
-            <p style="margin: 0; color: #0f172a;">
-                A presentation-ready interface for transparent object segmentation and lightweight grasp-point visualisation
-                using precomputed outputs from CNN U-Net, Spiking U-Net, and DTA-SNN.
-            </p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    """
+    <div style="padding: 0.9rem 1rem; border-radius: 16px; background: linear-gradient(120deg, #d9efe6, #dceaf7); border: 1px solid #bfd6cc;">
+        <h2 style="margin: 0.8rem 0 0.2rem 0; color: #0f172a;">Spiking Neural Network with Dual Temporal-Channel Attention</h2>
+        <p style="margin: 0; color: #0f172a;">
+            A presentation-ready interface for transparent object segmentation and lightweight grasp-point visualisation
+            using precomputed outputs from CNN U-Net, Spiking U-Net, and DTA-SNN.
+        </p>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
 
     with st.container():
         with st.expander("Why Transparent Object Segmentation Is Hard", expanded=True):
