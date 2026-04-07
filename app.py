@@ -220,11 +220,7 @@ def render_overview() -> None:
     st.markdown(
         """
         <div style="padding: 0.9rem 1rem; border-radius: 16px; background: linear-gradient(120deg, #d9efe6, #dceaf7); border: 1px solid #bfd6cc;">
-            <div style="display:flex; gap:0.7rem; align-items:center; flex-wrap:wrap;">
-                <span style="background:#0f766e; color:white; padding:0.35rem 0.75rem; border-radius:999px; font-size:0.86rem; font-weight:700;">Patent-Pending DTA</span>
-                <span style="background:#1d4ed8; color:white; padding:0.35rem 0.75rem; border-radius:999px; font-size:0.86rem; font-weight:700;">Offline Demo</span>
-                <span style="background:#111827; color:white; padding:0.35rem 0.75rem; border-radius:999px; font-size:0.86rem; font-weight:700;">No Live Inference</span>
-            </div>
+            
             <h2 style="margin: 0.8rem 0 0.2rem 0; color: #0f172a;">Spiking Neural Network with Dual Temporal-Channel Attention</h2>
             <p style="margin: 0; color: #0f172a;">
                 A presentation-ready interface for transparent object segmentation and lightweight grasp-point visualisation
@@ -394,8 +390,8 @@ def render_footer() -> None:
     """Compact footer text for the presentation app."""
     st.markdown("---")
     st.caption(
-        "This demo runs fully offline using precomputed images, masks, attention maps, and metadata stored in `demo_data/`."
-    )
+    "Research demonstration of SNN-DTA highlighting segmentation quality, temporal-channel attention, and grasp-point prediction."
+   )
 
 
 def main() -> None:
