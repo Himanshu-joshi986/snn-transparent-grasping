@@ -1,6 +1,6 @@
 {
   "model": "dta_snn",
-  "iou": 0.265,
+  "iou": 0.755,
   "dice": 0.812,
   "f1_score": 0.801,
   "precision": 0.846,
