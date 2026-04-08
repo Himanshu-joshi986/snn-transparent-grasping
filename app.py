@@ -62,8 +62,9 @@ DEFAULT_BENCHMARKS = [
 
 
 @st.cache_data
-def load_benchmarks() -> pd.DataFrame:
+def load_benchmarks(cache_buster: float | None = None) -> pd.DataFrame:
     """Load the project-level benchmark table used for the presentation."""
+    del cache_buster
     if BENCHMARKS_PATH.exists():
         with open(BENCHMARKS_PATH, "r", encoding="utf-8") as handle:
             data = json.load(handle)
@@ -72,8 +73,9 @@ def load_benchmarks() -> pd.DataFrame:
 
 
 @st.cache_data
-def load_metadata() -> pd.DataFrame:
+def load_metadata(cache_buster: float | None = None) -> pd.DataFrame:
     """Load per-image demo metadata such as IoUs and DTA centroid."""
+    del cache_buster
     if not METADATA_PATH.exists():
         return pd.DataFrame(
             columns=["image_id", "centroid_x", "centroid_y", "iou_cnn", "iou_snn", "iou_dta"]
@@ -114,9 +116,9 @@ def make_metric_cards(benchmarks: pd.DataFrame) -> None:
         with card:
             st.metric(
                 row["Model"],
-                f"{row['Real-Test IoU']:.2f} IoU",
+                f"{row['Real-Test IoU']:.3f} IoU",
                 delta=delta,
-                help=f"Synthetic IoU: {row['Synthetic IoU']:.2f} | Energy: {row['Energy (mJ)']:.1f} mJ",
+                help=f"Synthetic IoU: {row['Synthetic IoU']:.3f} | Energy: {row['Energy (mJ)']:.1f} mJ",
             )
             st.caption(f"Parameters: {row['Parameters']} | Energy: {row['Energy (mJ)']:.1f} mJ")
 
@@ -138,7 +140,7 @@ def make_benchmark_charts(benchmarks: pd.DataFrame) -> None:
             y="IoU",
             color="Split",
             barmode="group",
-            text_auto=".2f",
+            text_auto=".3f",
             color_discrete_sequence=["#8da0cb", "#66c2a5"],
             title="Accuracy Comparison",
         )
@@ -171,10 +173,10 @@ def format_benchmark_table(df: pd.DataFrame) -> pd.DataFrame:
     best_energy = table["Energy (mJ)"].min()
 
     table["Synthetic IoU"] = table["Synthetic IoU"].map(
-        lambda v: f"{v:.2f}" if v == best_synth else f"{v:.2f}"
+        lambda v: f"{v:.3f}" if v == best_synth else f"{v:.3f}"
     )
     table["Real-Test IoU"] = table["Real-Test IoU"].map(
-        lambda v: f"{v:.2f}" if v == best_real else f"{v:.2f}"
+        lambda v: f"{v:.3f}" if v == best_real else f"{v:.3f}"
     )
     table["Energy (mJ)"] = table["Energy (mJ)"].map(
         lambda v: f"{v:.1f}" if v == best_energy else f"{v:.1f}"
@@ -402,7 +404,10 @@ def main() -> None:
     render_overview()
 
     st.markdown("## Metrics Dashboard")
-    benchmarks = load_benchmarks()
+    benchmarks_mtime = BENCHMARKS_PATH.stat().st_mtime if BENCHMARKS_PATH.exists() else None
+    metadata_mtime = METADATA_PATH.stat().st_mtime if METADATA_PATH.exists() else None
+
+    benchmarks = load_benchmarks(benchmarks_mtime)
     make_metric_cards(benchmarks)
     make_benchmark_charts(benchmarks)
 
@@ -410,7 +415,7 @@ def main() -> None:
         st.dataframe(format_benchmark_table(benchmarks), use_container_width=True, hide_index=True)
 
 
-    metadata = load_metadata()
+    metadata = load_metadata(metadata_mtime)
     render_gallery(metadata)
     render_footer()
 
